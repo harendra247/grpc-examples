@@ -29,21 +29,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive \
             cmake && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #### gRPC
-#### https://github.com/grpc/grpc/tree/master/src/cpp
-#### https://github.com/grpc/grpc/blob/master/BUILDING.md
-#### apt-get install -y build-essential autoconf libtool pkg-config && \
-###RUN cd /tmp && \
-###     git clone --recurse-submodules -b v${GPRC_VERSION} https://github.com/grpc/grpc && \
-###     cd grpc && mkdir -p cmake/build && pushd cmake/build && cmake -DgRPC_INSTALL=ON \
-###     -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../.. && \
-###     make -j${NUM_JOBS} && make install && popd && cd ../ && rm -rf grpc
-###
-###RUN cd /tmp && \
-###git clone https://github.com/abseil/abseil-cpp.git && \
-###cd abseil-cpp && mkdir build && pushd build && \
-###cmake .. -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR && \
-###make -j${NUM_JOBS} && make install && popd && cd ../ && rm -rf abseil-cpp
-
 RUN INSTALL_DIR=$MY_INSTALL_DIR && mkdir -p $INSTALL_DIR \
 	&& export PATH="$INSTALL_DIR/bin:$PATH" \
 	&& git clone --recurse-submodules -b v${GPRC_VERSION} https://github.com/grpc/grpc \
@@ -55,16 +40,16 @@ RUN INSTALL_DIR=$MY_INSTALL_DIR && mkdir -p $INSTALL_DIR \
 	&& cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ../.. \
 	&& make -j${NUM_JOBS} && make install && popd && cd ../ && rm -rf grpc
 
-###RUN export SRC_DIR=protos/ && export DST_DIR=src/sample_grpc/ && mkdir -p $DST_DIR \
 ###	&& protoc -I=$SRC_DIR --cpp_out=$DST_DIR $SRC_DIR/sample_grpc.proto \
 ###	&& protoc -I=$SRC_DIR --grpc_out=$DST_DIR --plugin=protoc-gen-grpc=$INSTALL_DIR/bin/grpc_cpp_plugin $SRC_DIR/sample_grpc.proto
-RUN export INSTALL_DIR=/usr/local/app && export CODE_DIR=$MY_CODE_DIR \
-	&& mkdir -p $CODE_DIR $INSTALL_DIR && export PATH="$INSTALL_DIR/bin:$PATH" \
-	&& git clone https://github.com/grpc_examples \
-	&& cd grpc_examples && mkdir -p cmake/build && pushd cmake/build \
-	&& cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR ../.. \
-	&& cmake --build . --target install --config Release \
-	&& popd && cd ../ && rm -rf grpc_examples
-
-
-CMD ["/bin/bash", "/usr/local/app/runtime.sh"]
+### ** FOR compiling and installing the apps follow this command *** ###
+###RUN export INSTALL_DIR=/usr/local/app && export CODE_DIR=$MY_CODE_DIR \
+###	&& mkdir -p $CODE_DIR $INSTALL_DIR && export PATH="$INSTALL_DIR/bin:$PATH" \
+###	&& git clone https://github.com/grpc_examples \
+###	&& cd grpc_examples && mkdir -p cmake/build && pushd cmake/build \
+###	&& cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR ../.. \
+###	&& cmake --build . --target install --config Release \
+###	&& popd && cd ../ && rm -rf grpc_examples
+###
+###
+###CMD ["/bin/bash", "/usr/local/app/runtime.sh"]
