@@ -34,3 +34,5 @@ foreach(_target calculator_client calculator_server calculator_async_client calc
             ${_REFLECTION}
             ${_GRPC_GRPCPP})
 endforeach()
+
+install(TARGETS calculator_client calculator_server calculator_async_client calculator_async_server DESTINATION "${main_bin_dest}")

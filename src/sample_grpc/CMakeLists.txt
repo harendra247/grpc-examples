@@ -34,3 +34,5 @@ foreach(_target sample_grpc_client sample_grpc_server sample_grpc_async_client s
             ${_REFLECTION}
             ${_GRPC_GRPCPP})
 endforeach()
+
+install(TARGETS sample_grpc_client sample_grpc_server sample_grpc_async_client sample_grpc_async_server DESTINATION "${main_bin_dest}")

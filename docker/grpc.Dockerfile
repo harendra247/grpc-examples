@@ -7,6 +7,7 @@ ARG NUM_JOBS=8
 ARG MY_INSTALL_DIR=$HOME/.local
 ARG MY_CODE_DIR=$HOME/
 
+WORKDIR /usr/local/app/
 ###ENV DEBIAN_FRONTEND noninteractive
 
 # Install package dependencies
@@ -57,10 +58,13 @@ RUN INSTALL_DIR=$MY_INSTALL_DIR && mkdir -p $INSTALL_DIR \
 ###RUN export SRC_DIR=protos/ && export DST_DIR=src/sample_grpc/ && mkdir -p $DST_DIR \
 ###	&& protoc -I=$SRC_DIR --cpp_out=$DST_DIR $SRC_DIR/sample_grpc.proto \
 ###	&& protoc -I=$SRC_DIR --grpc_out=$DST_DIR --plugin=protoc-gen-grpc=$INSTALL_DIR/bin/grpc_cpp_plugin $SRC_DIR/sample_grpc.proto
-RUN CODE_DIR=$MY_CODE_DIR && mkdir -p $CODE_DIR \
-	&& export PATH="$CODE_DIR/bin:$PATH" \
+RUN export INSTALL_DIR=/usr/local/app && export CODE_DIR=$MY_CODE_DIR \
+	&& mkdir -p $CODE_DIR $INSTALL_DIR && export PATH="$INSTALL_DIR/bin:$PATH" \
 	&& git clone https://github.com/grpc_examples \
 	&& cd grpc_examples && mkdir -p cmake/build && pushd cmake/build \
-	&& cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$CODE_DIR ../.. \
-	&& make -j${NUM_JOBS} && make install && popd && cd ../ && rm -rf grpc_examples
+	&& cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR ../.. \
+	&& cmake --build . --target install --config Release \
+	&& popd && cd ../ && rm -rf grpc_examples
 
+
+CMD ["/bin/bash", "/usr/local/app/runtime.sh"]

@@ -39,3 +39,4 @@ foreach(target ${targets})
     # target_include_directories(${proto_hdrs} ${grpc_hdrs})
 endforeach()
 
+install(TARGETS ${targets} DESTINATION "${main_bin_dest}")

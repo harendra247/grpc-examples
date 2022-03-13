@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.15)
-project(basic_grpc)
+project(grpc-examples)
+
+# define library version (update: apparently you can also do it in project()!)
+set(MY_LIBRARY_VERSION_MAJOR 1 CACHE STRING "major version" FORCE)
+set(MY_LIBRARY_VERSION_MINOR 0 CACHE STRING "minor version" FORCE)
+set(MY_LIBRARY_VERSION ${MY_LIBRARY_VERSION_MAJOR}.${MY_LIBRARY_VERSION_MINOR} CACHE STRING "version" FORCE)
+
+# some options
+option(MY_LIBRARY_USE_FANCY_NEW_CLASS "whether or not to use fancy new class" ON)
+option(MY_LIBRARY_DEBUG_MODE "whether or not debug mode is activated" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -26,6 +35,11 @@ if(CMAKE_CROSSCOMPILING)
 else()
     set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
 endif()
+
+
+#set(include_dest "include/my_library-${MY_LIBRARY_VERSION}")
+#set(main_lib_dest "lib/my_library-${MY_LIBRARY_VERSION}")
+set(main_bin_dest "bin/")
 
 add_subdirectory(sample_grpc)
 
