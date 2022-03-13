@@ -49,7 +49,7 @@ gRPC c++ examples with CMake.
 #### Instruction
 Define a service in a `.proto` file using the **Interface Definition Language (IDL)** from **Protocol Buffers**.
 
-#### Example: [Sample service](protos/sample_grpc.proto)
+#### Example: [Hello World service](protos/sample_grpc.proto)
 ```protobuf
 syntax = "proto3";
 
@@ -72,6 +72,8 @@ message Response {
 
 #### Example: [Calculator service](protos/calculator.proto)
 
+#### Example: [Greetings service](protos/greetings.proto)
+
 #### Note
 
 ### How to generate gRPC code
@@ -86,7 +88,7 @@ where:
 * `SRC_DIR`: The source directory, or the directory contains the `.proto` file.
 * `DST_DIR`: The destination directory, or the directory contains the `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files.
 
-#### Example: Sample
+#### Example: Hello World
 With `SRC_DIR = protos/` and `DST_DIR = sample_grpc/`:
 ```bash
 $ protoc -I=protos/ --cpp_out=sample_grpc/ protos/sample_grpc.proto
@@ -104,7 +106,7 @@ $ protoc -I=protos/ --grpc_out=calculator/ --plugin=protoc-gen-grpc=/usr/local/b
 
 #### Note
 
-The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated automatically by the CMake's `add_custom_command` command and should not be included in the actual project. See also: [Sample_GRPC CMakeLists.txt](src/sample_grpc/CMakeLists.txt), [Calculator CMakeLists.txt](src/calculator/CMakeLists.txt) and [Greetings CMakeLists.txt](src/greetings/CMakeLists.txt).
+The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated automatically by the CMake's `add_custom_command` command and should not be included in the actual project. See also: [Hello World CMakeLists.txt](src/sample_grpc/CMakeLists.txt), [Calculator CMakeLists.txt](src/calculator/CMakeLists.txt) and [Greetings CMakeLists.txt](src/greetings/CMakeLists.txt).
 
 ### How to write a client
 
@@ -114,7 +116,7 @@ The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated a
 3. Make a unary RPC.
 4. Check returned status and response.
 
-#### Example: [Sample client](src/sample_grpc/sample_grpc_client.cpp)
+#### Example: [Hello World client](src/sample_grpc/sample_grpc_client.cpp)
 #### Example: [Calculator client](src/calculator/calculator_client.cpp)
 #### Example: [Greetings client](src/greetings/greetings_client.cpp)
 
@@ -126,7 +128,7 @@ The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated a
 1. Implement the service interface.
 2. Build a server exporting the service.
 
-#### Example: [Sample server](src/sample_grpc/sample_grpc_server.cpp)
+#### Example: [Hello World server](src/sample_grpc/sample_grpc_server.cpp)
 
 #### Example: [Calculator server](src/calculator/calculator_server.cpp)
 
@@ -144,7 +146,7 @@ The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated a
 4. Request to update the response and the call status upon completion of the RPC with a unique tag.
 5. Wait for the completion queue to return the next tag.
 
-#### Example: [Sample async client](sample_grpc/sample_grpc_async_client.cpp)
+#### Example: [Hello World async client](sample_grpc/sample_grpc_async_client.cpp)
 
 #### Example: [Calculator async client](calculator/calculator_async_client.cpp)
 
@@ -158,7 +160,7 @@ The `.pb.h`, `.pb.cc`, `.grpc.pb.h` and `.grpc.pb.cc` files could be generated a
 2. Request an RPC with a unique tag.
 3. Wait for the completion queue to return the next tag.
 
-#### Example: [Sample async server](sample_grpc/sample_grpc_async_server.cpp)
+#### Example: [Hello World async server](sample_grpc/sample_grpc_async_server.cpp)
 
 #### Example: [Calculator async server](calculator/calculator_async_server.cpp)
 
